@@ -1,0 +1,19 @@
+name: Lambda Python Package
+description: 'Create an AWS Lambda Python deployment package'
+author: 'Will Goodman'
+
+inputs:
+  python_version:
+    description: 'Python version to package'
+    required: true
+    default: '3.7'
+  package_folder:
+    description: 'Directory where the Python package is stored'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.python_version }}
+    - ${{ inputs.package_folder }}
