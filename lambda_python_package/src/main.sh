@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh -l
 
 function main {
   # Source the other files to gain access to their functions
