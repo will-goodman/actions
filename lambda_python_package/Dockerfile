@@ -1,6 +1,6 @@
 FROM alpine:3.10
 
-RUN ["chmod", "+x", "/src/*.sh"]
+RUN ["chmod", "+x", "src/*.sh"]
 
 COPY LICENSE README.md /
 
