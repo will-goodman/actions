@@ -1,5 +1,16 @@
 name: Deploy Terraform
 
+inputs:
+  access_key_id:
+    description: 'Access key ID to deploy to AWS.'
+    required: true
+  secret_access_key_id:
+    description: 'Secret access key ID to deploy to AWS.'
+    required: true
+  default_region:
+    description: 'Region to deploy to.'
+    required: true
+
 jobs:
   terraform-deploy:
     runs-on: ubuntu-latest
@@ -20,25 +31,25 @@ jobs:
 
       - name: Terraform init
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: $INPUT_ACCESS_KEY_ID
+          AWS_SECRET_ACCESS_KEY: $INPUT_SECRET_ACCESS_KEY_ID
         run: terraform init
 
       - name: Terraform validation
         env:
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_DEFAULT_REGION: $INPUT_DEFAULT_REGION
         run: terraform validate
 
       - name: Terraform plan
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_ACCESS_KEY_ID: $INPUT_ACCESS_KEY_ID
+          AWS_SECRET_ACCESS_KEY: $INPUT_SECRET_ACCESS_KEY_ID
+          AWS_DEFAULT_REGION: $INPUT_DEFAULT_REGION
         run: terraform plan -out=plan
 
       - name: Terraform apply
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_ACCESS_KEY_ID: $INPUT_ACCESS_KEY_ID
+          AWS_SECRET_ACCESS_KEY: $INPUT_SECRET_ACCESS_KEY_ID
+          AWS_DEFAULT_REGION: $INPUT_DEFAULT_REGION
         run: terraform apply -auto-approve "plan"
