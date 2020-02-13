@@ -1,13 +1,13 @@
 FROM alpine:3.10
 
-RUN ["apt-get", "update"]
+RUN apk -U upgrade
+RUN apk -U add python$INPUT_PYTHON_VERSION ca-certificates
+RUN update-ca-certificates
 
-RUN ["apt-get", "install", "python3.7", "zip", "python-pip"]
+RUN apk add zip python-pip
 
-COPY LICENSE README.md /
+COPY LICENSE README.md / src /src/
 
-COPY ["src", "/src/"]
+RUN chmod +x /src/main.sh /src/install_dependencies.sh /src/test_python.sh /src/zip_package.sh
 
-RUN ["chmod", "+x", "/src/main.sh"]
-
-ENTRYPOINT ["/src/main.sh"]
+ENTRYPOINT /src/main.sh
