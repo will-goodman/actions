@@ -11,6 +11,10 @@ inputs:
     description: 'Directory where the Python package is stored'
     required: true
 
+outputs:
+  package_zip:
+    description: 'Python Lambda deployment package'
+
 runs:
   using: 'docker'
   image: 'Dockerfile'

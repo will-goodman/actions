@@ -15,6 +15,8 @@ function main {
 
   zip_package "$2"
 
+  ::set-output name=package_zip::{../../"$2".zip}
+
 }
 
 main "${*}"
